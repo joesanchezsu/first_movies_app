@@ -28,24 +28,29 @@ class MovieHorizontal extends StatelessWidget {
         pageSnapping: false,
         controller: _pageController,
         itemCount: peliculas.length,
-        itemBuilder: (context, i) => _createCard(context, peliculas[i]),
+        itemBuilder: (context, i) => _card(context, peliculas[i]),
         //children: _cards(context),
       ),
     );
   }
 
-  Widget _createCard(BuildContext context, Pelicula pelicula) {
-    return Container(
+  Widget _card(BuildContext context, Pelicula pelicula) {
+    pelicula.uniqueId = '${pelicula.id}-poster';
+
+    final card = Container(
       margin: EdgeInsets.only(right: 15.0),
       child: Column(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: FadeInImage(
-              image: NetworkImage(pelicula.getPosterImg()),
-              placeholder: AssetImage('assets/img/no-image.jpg'),
-              fit: BoxFit.cover,
-              height: 140.0,
+          Hero(
+            tag: pelicula.uniqueId,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: FadeInImage(
+                image: NetworkImage(pelicula.getPosterImg()),
+                placeholder: AssetImage('assets/img/no-image.jpg'),
+                fit: BoxFit.cover,
+                height: 140.0,
+              ),
             ),
           ),
           SizedBox(
@@ -58,6 +63,13 @@ class MovieHorizontal extends StatelessWidget {
           ),
         ],
       ),
+    );
+
+    return GestureDetector(
+      child: card,
+      onTap: () {
+        Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+      },
     );
   }
 }

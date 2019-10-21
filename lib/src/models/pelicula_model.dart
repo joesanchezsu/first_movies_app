@@ -14,6 +14,7 @@ class Peliculas {
 }
 
 class Pelicula {
+  String uniqueId;
   double popularity;
   int voteCount;
   bool video;
@@ -68,6 +69,14 @@ class Pelicula {
       return 'http://www.kamalacinemas.com/images/noimage.gif';
     } else {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
+  }
+
+  getBackgroundImg() {
+    if (posterPath == null) {
+      return 'http://www.kamalacinemas.com/images/noimage.gif';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
     }
   }
 }
